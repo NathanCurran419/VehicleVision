@@ -5,8 +5,7 @@ CreatedonMonApr122:08:542024
 @author:mspea
 """
 
-
-import csv
+class Car():
     
     def __init__(self,*args):
         self.price = args[0]
