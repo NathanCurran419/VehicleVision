@@ -83,7 +83,7 @@ def on_year_select(event):
 
 # loading car data
 
-car_data = load_car_data('CAR DATA COMBINED.csv')
+car_data = load_car_data('car_data\CAR DATA COMBINED.csv')
 
 # getting unqiue car makes
 
