@@ -6,8 +6,9 @@ Created on Tue Apr  2 13:55:20 2024
 """
 
 import csv
+from ctypes import alignment
 import tkinter as tk
-from tkinter import ttk
+from tkinter import Image, ttk
 
 
 def load_car_data(filename):
@@ -58,10 +59,40 @@ def set_car():
     make = make_select.get()
     model = model_select.get()
     year = year_select.get()
-    selected_car = str([row for row in data
-                        if row['Model'] == model and row['Make'] == make and row['Prod. year'] == year])
-    car = tk.Label(root, text=selected_car)
-    car.pack()
+    selected_car = []
+    
+    #Finding row for matching car details
+    for row in data:
+        if row['Model'] == model and row['Make'] == make and row['Prod. year'] == year:
+            for val in row:
+                selected_car.append((row[val]))
+                
+    #Creating Car Labels
+    price_label = tk.Label(root,text = (f'Price: ${selected_car[0]}'), font = 14, bg='white')
+    price_label.grid(row = 3, column = 1, padx= 10, pady = 10)
+    
+    car_make_label = tk.Label(root,text = (f'Make: {selected_car[1]}'), font = 14, bg='white')
+    car_make_label.grid(row = 3, column = 2, padx= 10, pady = 10)
+    
+    car_model_label = tk.Label(root, text = (f'Model: {selected_car[2]}'), font = 14, bg='white')
+    car_model_label.grid(row = 4, column = 1, padx= 10, pady = 10)
+    
+    car_year_label = tk.Label(root, text = (f'Year: {selected_car[3]}'), font = 14, bg='white')
+    car_year_label.grid(row = 4, column = 2, padx= 10, pady = 10)
+    
+    #Price,Make,Model,Prod. year,Category,Gear box type,Drive wheels,UHighway
+    car_category_label = tk.Label(root, text=(f'Category: {selected_car[4]}'), font = 14, bg='white')
+    car_category_label.grid(row = 5, column = 1, padx= 10, pady = 10)
+    
+    car_gear_label = tk.Label(root, text = (f'Gear Type: {selected_car[5]}'), font = 14, bg='white')
+    car_gear_label.grid(row = 5, column = 2, padx= 10, pady = 10)
+    
+    car_drive_label = tk.Label(root, text = (f'Drive: {selected_car[6]}'), font = 14, bg='white')
+    car_drive_label.grid(row = 6, column = 1, padx= 10, pady = 10)
+    
+    car_mpg_label = tk.Label(root, text= (f'AVG MPG: {selected_car[7]}'), font = 14, bg='white')
+    car_mpg_label.grid(row = 6, column = 2, padx= 10, pady = 10)
+    
     print(selected_car)
 
 
@@ -93,32 +124,38 @@ unique_makes = get_unique_makes(car_data)
 
 root = tk.Tk()
 root.title("Car Comparison Tool")
+root.geometry("500x500")
+
+background_image = tk.PhotoImage(file='car_data\VehicleVisionTempImage.png',height = 500,width=500)
+background_label = tk.Label(root, image = background_image)
+background_label.place(x=0,y=0)
+
 
 # make selection box
-make_label = tk.Label(root, text="Select Make:")
-make_label.pack()
+make_label = tk.Label(root, text="Select Make:", bg='white')
+make_label.grid(row = 1, column = 1, padx= 10, pady = 10)
 
 make_select = ttk.Combobox(root, values=unique_makes)
 make_select.bind('<<ComboboxSelected>>', on_make_select)
-make_select.pack()
+make_select.grid(row = 2, column = 1, padx= 10, pady = 10)
 
 # model selection box
 
-model_label = tk.Label(root, text="Select Model:")
-model_label.pack()
+model_label = tk.Label(root, text="Select Model:", bg='white')
+model_label.grid(row = 1, column = 2, padx= 10, pady = 10)
 
 model_select = ttk.Combobox(root)
 model_select.bind('<<ComboboxSelected>>', on_model_select)
-model_select.pack()
+model_select.grid(row = 2, column = 2, padx= 10, pady = 10)
 
 # year selection box
 
-year_label = tk.Label(root, text="Select Year:")
-year_label.pack()
+year_label = tk.Label(root, text="Select Year:", bg='white')
+year_label.grid(row = 1, column = 3, padx= 10, pady = 10)
 
 year_select = ttk.Combobox(root)
 year_select.bind('<<ComboboxSelected>>', on_year_select)
-year_select.pack()
+year_select.grid(row = 2, column = 3, padx= 10, pady = 10)
 
 # start user interface
 root.mainloop()
