@@ -7,19 +7,40 @@ Created on Tue Apr  2 13:55:20 2024
 
 
 import csv
+from http.client import NOT_FOUND
 import tkinter as tk
-from tkinter import Canvas, Frame, Image, Toplevel, ttk
+from tkinter import Frame, Image, Label, Toplevel, ttk
 
 class ui():
+    
+    def on_reset_click(self):
+        self.destroy()
+        ui.__init__(self)
+    
+        
+    def __init__ (self):
+        root = tk.Tk()
+        root.title("Car Comparison Tool")
+        root.geometry("700x700")
+
+        root.columnconfigure(1,weight=0)
+        root.columnconfigure(2,weight=0)
+        root.columnconfigure(3,weight=5)
+        root.columnconfigure(4,weight=0)
+        
+    
+        main_window_frame = ui.create_frame(root)
+        main_window_frame.grid(column=3,row=0)
+        
+
+
+        root.mainloop()
+        
     
     
     def create_frame(container):
         
         main_window_frame = ttk.Frame(container)
-        
-        #grid_laout for frame
-        main_window_frame.columnconfigure(0,weight=1)
-        main_window_frame.columnconfigure(0,weight = 3)
         
         
         def update_models():
@@ -80,14 +101,8 @@ class ui():
             no_button = tk.Button(exit_prompt, text ="No go back...", command=go_back,font=40, justify='center')
             yes_button.grid(row=1,column = 1,padx=10,pady=30)
             no_button.grid(row=2,column=1,padx=60,pady=0)
-        
-        def on_reset_click():
-            pass
-            
-          
-            
-            
-        
+
+
         def on_year_select(event):
             # calling set car to pull selected car info
             okay_button = tk.Button(main_window_frame,text="Select",bg='green',height = 3, width=10,font=14, command= set_car, state='active')
@@ -102,42 +117,73 @@ class ui():
             year = year_select.get()
             selected_car = []
             
+            #Creating detail Car Labels
+            price_var = tk.StringVar()
+            car_make_var = tk.StringVar()
+            car_model_var = tk.StringVar()
+            car_year_var = tk.StringVar()
+            car_cat_var = tk.StringVar()
+            car_gear_var = tk.StringVar()
+            car_drive_var = tk.StringVar()
+            car_mpg_var = tk.StringVar()
+
+                
+            select_button = tk.Button(main_window_frame,text="Select",bg='grey',height = 3, width=10,font=14, command= set_car, state='disabled')
+            select_button.grid(row=7, column = 1, padx=10,pady=10)
+
+            price_label = tk.Label(main_window_frame,textvariable = price_var, font = 14, bg='white')
+            price_label.grid(row = 3, column = 1, padx= 10, pady = 10)
+    
+            car_make_label = tk.Label(main_window_frame,textvariable = car_make_var, font = 14, bg='white')
+            car_make_label.grid(row = 3, column = 2, padx= 10, pady = 10)
+    
+            car_model_label = tk.Label(main_window_frame, textvariable = car_model_var, font = 14, bg='white')
+            car_model_label.grid(row = 4, column = 1, padx= 10, pady = 10)
+    
+            car_year_label = tk.Label(main_window_frame, textvariable = car_year_var, font = 14, bg='white')
+            car_year_label.grid(row = 4, column = 2, padx= 10, pady = 10)
+            
+            car_category_label = tk.Label(main_window_frame, textvariable=car_cat_var, font = 14, bg='white')
+            car_category_label.grid(row = 3, column = 3, padx= 10, pady = 10)
+    
+            car_gear_label = tk.Label(main_window_frame, textvariable =car_gear_var, font = 14, bg='white')
+            car_gear_label.grid(row = 3, column = 4, padx= 10, pady = 10)
+    
+            car_drive_label = tk.Label(main_window_frame, textvariable =car_drive_var, font = 14, bg='white')
+            car_drive_label.grid(row = 4, column = 3, padx= 10, pady = 10)
+    
+            car_mpg_label = tk.Label(main_window_frame, textvariable=car_mpg_var, font = 14, bg='white')
+            car_mpg_label.grid(row = 4, column = 4, padx= 10, pady = 10)
+            
+
+            
+            
             #Finding row for matching car details
             for row in data:
                 if row['Model'] == model and row['Make'] == make and row['Prod. year'] == year:
                     for val in row:
                         selected_car.append((row[val]))
-                            
-            #Creating Car Labels
-            price_label = tk.Label(main_window_frame,text = (f'Price: ${selected_car[0]}'), font = 14, bg='white')
-            price_label.grid(row = 3, column = 1, padx= 10, pady = 10)
-    
-            car_make_label = tk.Label(main_window_frame,text = (f'Make: {selected_car[1]}'), font = 14, bg='white')
-            car_make_label.grid(row = 3, column = 2, padx= 10, pady = 10)
-    
-            car_model_label = tk.Label(main_window_frame, text = (f'Model: {selected_car[2]}'), font = 14, bg='white')
-            car_model_label.grid(row = 4, column = 1, padx= 10, pady = 10)
-    
-            car_year_label = tk.Label(main_window_frame, text = (f'Year: {selected_car[3]}'), font = 14, bg='white')
-            car_year_label.grid(row = 4, column = 2, padx= 10, pady = 10)
-    
-            #Price,Make,Model,Prod. year,Category,Gear box type,Drive wheels,UHighway
-            car_category_label = tk.Label(main_window_frame, text=(f'Category: {selected_car[4]}'), font = 14, bg='white')
-            car_category_label.grid(row = 5, column = 1, padx= 10, pady = 10)
-    
-            car_gear_label = tk.Label(main_window_frame, text = (f'Gear Type: {selected_car[5]}'), font = 14, bg='white')
-            car_gear_label.grid(row = 5, column = 2, padx= 10, pady = 10)
-    
-            car_drive_label = tk.Label(main_window_frame, text = (f'Drive: {selected_car[6]}'), font = 14, bg='white')
-            car_drive_label.grid(row = 6, column = 1, padx= 10, pady = 10)
-    
-            car_mpg_label = tk.Label(main_window_frame, text= (f'AVG MPG: {selected_car[7]}'), font = 14, bg='white')
-            car_mpg_label.grid(row = 6, column = 2, padx= 10, pady = 10)
-    
-            print(selected_car)
-        
-        for widget in main_window_frame.winfo_children():
-            widget.grid(padx=5,pady=5)
+            if selected_car == [] :
+                
+                price_var.set("Price: NA")
+                car_make_var.set(f'Make: {make}')
+                car_model_var.set(f'Model: {model}')
+                car_year_var.set(f'Year: {year}')
+                car_cat_var.set(f'Category: NA')
+                car_gear_var.set(f'Gear: NA')
+                car_drive_var.set(f'Drive: NA')
+                car_mpg_var.set(f'MPG: NA')
+
+                
+            if selected_car != []:               
+                price_var.set(f'Price: ${selected_car[0]}')
+                car_make_var.set(f'Make: {selected_car[1]}')
+                car_model_var.set(f'Model: {selected_car[2]}')
+                car_year_var.set(f'Year: {selected_car[3]}')
+                car_cat_var.set(f'Category: {selected_car[4]}')
+                car_gear_var.set(f'Gear Type: {selected_car[5]}')
+                car_drive_var.set(f'Drive: {selected_car[6]}')
+                car_mpg_var.set(f'AVG MPG: {selected_car[7]}')
 
         def create_button(container):
             # create okay button
@@ -145,7 +191,7 @@ class ui():
             select_button.grid(row=7, column = 1, padx=10,pady=10)
 
             # create reset button
-            reset_button = tk.Button(main_window_frame,text="Reset", bg = 'yellow', height = 3, width = 10, font = 14, command=on_reset_click)
+            reset_button = tk.Button(main_window_frame,text="Reset", bg = 'yellow', height = 3, width = 10, font = 14, command=lambda: ui.on_reset_click(container))
             reset_button.grid(row=7,column=2,padx=10,pady=10)
 
             #create close button
@@ -189,20 +235,7 @@ class ui():
     
         return main_window_frame
     
-    
-    def create_root_window(self):
-        root = tk.Tk()
-        root.title("Car Comparison Tool")
-        root.geometry("1400x1400")
-    
-        root.columnconfigure(0,weight=4)
-        root.columnconfigure(1,weight=1)
-    
-        main_window_frame = ui.create_frame(root)
-        main_window_frame.grid(column=1,row=0)
-        
-    
-        root.mainloop()
+
 
 
 def load_car_data(filename):
@@ -235,10 +268,13 @@ car_data = load_car_data('car_data\CAR DATA COMBINED.csv')
 
 unique_makes = get_unique_makes(car_data)
 
-form1 = ui()
+
+
 
 
 
 # start user interface
 if __name__ == "__main__":
-    form1.create_root_window()
+    form1 = ui()
+    form1
+    
