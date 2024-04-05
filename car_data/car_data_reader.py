@@ -13,6 +13,8 @@ from tkinter import Frame, Image, Label, Toplevel, ttk
 
 class ui():
     
+    car = []
+    
     def on_reset_click(self):
         self.destroy()
         ui.__init__(self)
@@ -185,6 +187,7 @@ class ui():
                 car_drive_var.set(f'Drive: {selected_car[6]}')
                 car_mpg_var.set(f'AVG MPG: {selected_car[7]}')
                 
+            ui.car = selected_car
                 
 
         def create_button(container):

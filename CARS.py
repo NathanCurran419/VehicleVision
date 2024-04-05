@@ -9,5 +9,6 @@ import car_data.car_data_reader as cdr
 import car_data.personal_information as pi
 
 
-
-car1 = cdr.ui()
+cdr.ui()
+car1 = cdr.ui.car
+print(car1)
