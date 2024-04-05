@@ -21,7 +21,7 @@ class ui():
     def __init__ (self):
         root = tk.Tk()
         root.title("Car Comparison Tool")
-        root.geometry("700x700")
+        root.geometry("800x600")
 
         root.columnconfigure(1,weight=0)
         root.columnconfigure(2,weight=0)
@@ -184,6 +184,8 @@ class ui():
                 car_gear_var.set(f'Gear Type: {selected_car[5]}')
                 car_drive_var.set(f'Drive: {selected_car[6]}')
                 car_mpg_var.set(f'AVG MPG: {selected_car[7]}')
+                
+                
 
         def create_button(container):
             # create okay button
