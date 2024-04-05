@@ -8,7 +8,11 @@ CreatedonMonApr122:08:542024
 import car_data.car_data_reader as cdr
 import car_data.personal_information as pi
 
-
+print("Select first car.")
 cdr.ui()
 car1 = cdr.ui.car
-print(car1)
+print("Selected a second car.")
+cdr.ui()
+car2 = cdr.ui.car
+print(f'Your first selected car: {car1}')
+print(f'Your second selected car: {car2}')
