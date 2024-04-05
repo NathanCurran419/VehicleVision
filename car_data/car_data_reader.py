@@ -13,36 +13,44 @@ from tkinter import Frame, Image, Label, Toplevel, ttk
 
 class ui():
     
-    car = []
     
-    def on_reset_click(self):
-        self.destroy()
-        ui.__init__(self)
+    car = []
+    car2 = []
+
+  
     
         
     def __init__ (self):
         root = tk.Tk()
         root.title("Car Comparison Tool")
-        root.geometry("800x600")
+        root.geometry("1400x600")
 
-        root.columnconfigure(1,weight=0)
-        root.columnconfigure(2,weight=0)
-        root.columnconfigure(3,weight=5)
-        root.columnconfigure(4,weight=0)
-        
+        root.columnconfigure(1,weight=1)
+        #root.columnconfigure(2,weight=1)
     
-        main_window_frame = ui.create_frame(root)
-        main_window_frame.grid(column=3,row=0)
-        
-
+        main_window_frame = ui.create_frame(root, name = 'car_1')
+        main_window_frame.grid(column=1,row=0, padx = 0, pady = 0)
+        main_window_frame2 = ui.create_frame(root, name = 'car_2')
+        main_window_frame2.grid(column=1,row=2, padx = 0, pady = 0)
 
         root.mainloop()
         
-    
-    
-    def create_frame(container):
+    def on_reset_click(frame,name):
+        parent_window = frame.winfo_toplevel()
+        grid_info = frame.grid_info()
+        frame.destroy()
+        new_frame = ui.create_frame(parent_window,name)
+        new_frame.grid(column = grid_info['column'], row=grid_info['row'], padx=grid_info['padx'], pady = grid_info['pady'])
         
-        main_window_frame = ttk.Frame(container)
+        
+
+        
+        
+    
+    def create_frame(container, name):
+        
+        container = ttk.Frame(container, name = name)
+        
         
         
         def update_models():
@@ -54,13 +62,11 @@ class ui():
         def on_make_select(event):
             # updating model selection
             update_models()
-            print("Models updated")
 
 
         def on_model_select(event):
             # updating years
             update_years()
-            print("Years updated")
 
         def update_years():
         # updating year selected based on model
@@ -86,11 +92,11 @@ class ui():
             
             #closes all windows if user selects yes to exit
             def close_windows():
-                container.destroy()
+                container.winfo_toplevel().destroy()
                 
-            # closes exit prompt and sends user back to main window(main_window_frame)
+            # closes exit prompt and sends user back to main window(container)
             def go_back():
-                container.deiconify()
+                container.winfo_toplevel().deiconify()
                 exit_prompt.destroy()
                 
             # Creating second window for prompt
@@ -98,17 +104,24 @@ class ui():
             exit_prompt = Toplevel()
             exit_prompt.title("Are you sure?")
             exit_prompt.geometry("250x150")
-            container.withdraw() #hides main window instead of destroy
+            container.winfo_toplevel().withdraw() #hides main window instead of destroy
             yes_button = tk.Button(exit_prompt,text="Yes Exit", command = close_windows, font=40,justify='center')
             no_button = tk.Button(exit_prompt, text ="No go back...", command=go_back,font=40, justify='center')
             yes_button.grid(row=1,column = 1,padx=10,pady=30)
             no_button.grid(row=2,column=1,padx=60,pady=0)
-
+        def display_car_comparison():
+            container.winfo_toplevel().destroy()
+            
+            
 
         def on_year_select(event):
             # calling set car to pull selected car info
-            okay_button = tk.Button(main_window_frame,text="Select",bg='green',height = 3, width=10,font=14, command= set_car, state='active')
-            okay_button.grid(row=7, column = 1, padx=10,pady=10)
+            if container.winfo_name() == 'car_2':
+                okay_button = tk.Button(container.winfo_toplevel(),text="Select",bg='green',height = 3, width=10,font=14, command= display_car_comparison, state='active')
+                okay_button.grid(row=7, column = 1, padx=10,pady=10)
+                set_car()
+            if container.winfo_name() == 'car_1':
+                set_car()
             
 
                             
@@ -129,32 +142,28 @@ class ui():
             car_drive_var = tk.StringVar()
             car_mpg_var = tk.StringVar()
 
-                
-            select_button = tk.Button(main_window_frame,text="Select",bg='grey',height = 3, width=10,font=14, command= set_car, state='disabled')
-            select_button.grid(row=7, column = 1, padx=10,pady=10)
-
-            price_label = tk.Label(main_window_frame,textvariable = price_var, font = 14, bg='white')
+            price_label = tk.Label(container,textvariable = price_var, font = 14, bg='white')
             price_label.grid(row = 3, column = 1, padx= 10, pady = 10)
     
-            car_make_label = tk.Label(main_window_frame,textvariable = car_make_var, font = 14, bg='white')
+            car_make_label = tk.Label(container,textvariable = car_make_var, font = 14, bg='white')
             car_make_label.grid(row = 3, column = 2, padx= 10, pady = 10)
     
-            car_model_label = tk.Label(main_window_frame, textvariable = car_model_var, font = 14, bg='white')
+            car_model_label = tk.Label(container, textvariable = car_model_var, font = 14, bg='white')
             car_model_label.grid(row = 4, column = 1, padx= 10, pady = 10)
     
-            car_year_label = tk.Label(main_window_frame, textvariable = car_year_var, font = 14, bg='white')
+            car_year_label = tk.Label(container, textvariable = car_year_var, font = 14, bg='white')
             car_year_label.grid(row = 4, column = 2, padx= 10, pady = 10)
             
-            car_category_label = tk.Label(main_window_frame, textvariable=car_cat_var, font = 14, bg='white')
+            car_category_label = tk.Label(container, textvariable=car_cat_var, font = 14, bg='white')
             car_category_label.grid(row = 3, column = 3, padx= 10, pady = 10)
     
-            car_gear_label = tk.Label(main_window_frame, textvariable =car_gear_var, font = 14, bg='white')
+            car_gear_label = tk.Label(container, textvariable =car_gear_var, font = 14, bg='white')
             car_gear_label.grid(row = 3, column = 4, padx= 10, pady = 10)
     
-            car_drive_label = tk.Label(main_window_frame, textvariable =car_drive_var, font = 14, bg='white')
+            car_drive_label = tk.Label(container, textvariable =car_drive_var, font = 14, bg='white')
             car_drive_label.grid(row = 4, column = 3, padx= 10, pady = 10)
     
-            car_mpg_label = tk.Label(main_window_frame, textvariable=car_mpg_var, font = 14, bg='white')
+            car_mpg_label = tk.Label(container, textvariable=car_mpg_var, font = 14, bg='white')
             car_mpg_label.grid(row = 4, column = 4, padx= 10, pady = 10)
             
 
@@ -186,22 +195,30 @@ class ui():
                 car_gear_var.set(f'Gear Type: {selected_car[5]}')
                 car_drive_var.set(f'Drive: {selected_car[6]}')
                 car_mpg_var.set(f'AVG MPG: {selected_car[7]}')
+
+            if container.winfo_name() == 'car_1':
+                ui.car = selected_car
+            elif container.winfo_name() == 'car_2':
+                ui.car2 = selected_car
+
+
                 
-            ui.car = selected_car
+            
+            
                 
 
         def create_button(container):
             # create okay button
-            select_button = tk.Button(main_window_frame,text="Select",bg='grey',height = 3, width=10,font=14, command= set_car, state='disabled')
-            select_button.grid(row=7, column = 1, padx=10,pady=400,)
+            select_button = tk.Button(container.winfo_toplevel(),text="Select",bg='grey',height = 3, width=10,font=14, command= set_car, state='disabled')
+            select_button.grid(row=7, column = 1, padx=10,pady=10)
 
             # create reset button
-            reset_button = tk.Button(main_window_frame,text="Reset", bg = 'yellow', height = 3, width = 10, font = 14, command=lambda: ui.on_reset_click(container))
-            reset_button.grid(row=7,column=2,padx=10,pady=400)
+            reset_button = tk.Button(container,text="Reset", bg = 'yellow', height = 1, width = 5, font = 14, command=lambda: ui.on_reset_click(container, container.winfo_name()))
+            reset_button.grid(row=2,column=4,padx=10,pady=10)
 
             #create close button
-            close_button = tk.Button(main_window_frame,text = "Exit", bg="red", height = 3,width = 10, font = 14, command= on_close_click)
-            close_button.grid(row=7,column = 3,padx=10,pady=400)
+            close_button = tk.Button(container.winfo_toplevel(),text = "Exit", bg="red", height = 3,width = 10, font = 14, command= on_close_click)
+            close_button.grid(row=8,column = 1,padx=10,pady=10)
         
         
         create_button(container)          
@@ -210,35 +227,35 @@ class ui():
 
     
         # make selection box
-        make_label = tk.Label(main_window_frame, text="Select Make:", bg='white')
+        make_label = tk.Label(container, text="Select Make:", bg='white')
         make_label.grid(row = 1, column = 1, padx= 10, pady = 10)
         
-        make_select = ttk.Combobox(main_window_frame, values=unique_makes)
+        make_select = ttk.Combobox(container, values=unique_makes)
         make_select.bind('<<ComboboxSelected>>', on_make_select)
         make_select.grid(row = 2, column = 1, padx= 10, pady = 10)
 
         # model selection box
 
-        model_label = tk.Label(main_window_frame, text="Select Model:", bg='white')
+        model_label = tk.Label(container, text="Select Model:", bg='white')
         model_label.grid(row = 1, column = 2, padx= 10, pady = 10)
 
-        model_select = ttk.Combobox(main_window_frame)
+        model_select = ttk.Combobox(container)
         model_select.bind('<<ComboboxSelected>>', on_model_select)
         model_select.grid(row = 2, column = 2, padx= 10, pady = 10)
 
         # year selection box
 
-        year_label = tk.Label(main_window_frame, text="Select Year:", bg='white')
+        year_label = tk.Label(container, text="Select Year:", bg='white')
         year_label.grid(row = 1, column = 3, padx= 10, pady = 10)
 
-        year_select = ttk.Combobox(main_window_frame)
+        year_select = ttk.Combobox(container)
         year_select.bind('<<ComboboxSelected>>', on_year_select)
         year_select.grid(row = 2, column = 3, padx= 10, pady = 10)
 
          
 
     
-        return main_window_frame
+        return container
     
 
 
