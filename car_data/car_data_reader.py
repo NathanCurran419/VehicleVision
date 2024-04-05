@@ -193,15 +193,15 @@ class ui():
         def create_button(container):
             # create okay button
             select_button = tk.Button(main_window_frame,text="Select",bg='grey',height = 3, width=10,font=14, command= set_car, state='disabled')
-            select_button.grid(row=7, column = 1, padx=10,pady=10)
+            select_button.grid(row=7, column = 1, padx=10,pady=400,)
 
             # create reset button
             reset_button = tk.Button(main_window_frame,text="Reset", bg = 'yellow', height = 3, width = 10, font = 14, command=lambda: ui.on_reset_click(container))
-            reset_button.grid(row=7,column=2,padx=10,pady=10)
+            reset_button.grid(row=7,column=2,padx=10,pady=400)
 
             #create close button
             close_button = tk.Button(main_window_frame,text = "Exit", bg="red", height = 3,width = 10, font = 14, command= on_close_click)
-            close_button.grid(row=7,column = 3,padx=10,pady=10)
+            close_button.grid(row=7,column = 3,padx=10,pady=400)
         
         
         create_button(container)          
