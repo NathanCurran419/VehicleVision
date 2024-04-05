@@ -16,3 +16,20 @@ cdr.ui()
 car2 = cdr.ui.car
 print(f'Your first selected car: {car1}')
 print(f'Your second selected car: {car2}')
+
+
+done = ""
+while done != "Y":
+    done = input("Quit? Y or N\n").upper()
+    if done == "Y":
+        print("Thanks for stopping by!")
+    elif done != "Y" and done != "N":
+        print(f'Your first selected car: {car1}')
+        print(f'Your second selected car: {car2}')
+        done = input("Please enter Y or N \n").upper()
+    elif done == "N":
+        print(f'Your first selected car: {car1}')
+        print(f'Your second selected car: {car2}')
+        done = input("Please enter Y once done reviewing data\n").upper()
+        
+    
