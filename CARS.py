@@ -5,7 +5,6 @@ CreatedonMonApr122:08:542024
 @author:mspea
 """
 
-from tokenize import Double
 import car_data.car_data_reader as cdr
 import car_data.personal_information as pi
 

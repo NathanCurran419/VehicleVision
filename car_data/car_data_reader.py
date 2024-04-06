@@ -7,7 +7,6 @@ Created on Tue Apr  2 13:55:20 2024
 
 
 import csv
-from http.client import NOT_FOUND
 import tkinter as tk
 from tkinter import Frame, Image, Label, Toplevel, ttk
 
