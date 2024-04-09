@@ -139,7 +139,7 @@ def create_main_window_frame(window, window_name):
     car_details_comparison_label = ttk.Label(window_container, text = car_details_comparison, font='Calibri 14 bold')
     car_details_comparison_label.grid(row = 3, column = 1, columnspan = 3)
 
-    done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home)
+    done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home,width=10,height=3)
     done_button.grid(row=12,column = 2)
 
     

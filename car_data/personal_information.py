@@ -1,7 +1,5 @@
-
-
-
 import tkinter as tk
+from tkinter import messagebox
 import csv
 
 
@@ -13,9 +11,12 @@ def pi_window():
         reader = csv.DictReader(csvfile)
         for row in reader:
             state_data[row['Abbreviation']] = float(row['Average'])
-
+     
+    rows = []
+    
     # Submission function
     def submit_form():
+        
         name = name_entry.get()
         avg_miles_driven = float(avg_miles_var.get())
         local_cost_per_gallon = float(local_cost_entry.get())
@@ -24,29 +25,23 @@ def pi_window():
         email = email_entry.get()
         
         data = [name,avg_miles_driven,local_cost_per_gallon,state_abbreviation,avg_insurance,email]
-        rows = []
+        
         user_file = r'car_data\user_info.csv'
+                
+        # Check if email already exists in the CSV file
         with open(user_file, 'r', newline='') as file:
             reader = csv.reader(file)
             for row in reader:
-                rows.append(row)
-                
-        row_index = len(rows)+1
+                if email == row[5]:
+                    messagebox.showinfo("Error", "Email already exists. Please login instead.")
+                    return
 
-        # Update the specific row with new data
-        if row_index < len(rows):
-            rows[row_index] = data
-        else:
-            # If row_index is out of bounds, append the data as a new row
-            rows.append(data)
-
-        # Write the updated data back to the CSV file
-        with open(user_file, 'w', newline='') as file:
+        # Append the data as a new row
+        with open(user_file, 'a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerows(rows)
+            writer.writerow([name, avg_miles_driven, local_cost_per_gallon, state_abbreviation, email])
+            
 
-
-        # Report stored data for development purposes
         print("Name:", name)
         print("Avg Miles Driven Per Week:", avg_miles_driven)
         print("Local Cost Per Gallon:", local_cost_per_gallon)
@@ -58,11 +53,12 @@ def pi_window():
 
     window = tk.Tk()
     window.title("Personal Information")
+    window.geometry('700x400')
 
     info_label = tk.Label(window, text="Personal Information", font=("Arial", 16))
     info_label.pack()
 
-    desc_label = tk.Label(window, text="To help formulate individual cost reports.", font=("Arial", 10))
+    desc_label = tk.Label(window, text="To help formulate individual cost reports.", font=("Arial", 14))
     desc_label.pack()
 
     name_label = tk.Label(window, text="Name:")
