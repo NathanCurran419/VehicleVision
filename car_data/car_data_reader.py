@@ -40,10 +40,6 @@ class ui():
         new_frame.grid(column = grid_info['column'], row=grid_info['row'], padx=grid_info['padx'], pady = grid_info['pady'])
         
         
-
-        
-        
-    
     def create_frame(container, name):
         
         container = ttk.Frame(container, name = name)
@@ -81,15 +77,9 @@ class ui():
             make = make_select.get()
             model = model_select.get()
             return sorted(set([row['Prod. year'] for row in data if row['Model'] == model and row['Make'] == make]))
-        
-        
-        def on_okay_click():
-            make = make_select.get()
-            model = model_select.get()
-            year = year_select.get()
-            print(make)
-            print(model)
-            print(year)
+
+
+
         def on_close_click():
             
             #closes all windows if user selects yes to exit
@@ -163,8 +153,6 @@ class ui():
         create_button(container)          
 
 
-
-    
         # make selection box
         make_label = tk.Label(container, text="Select Make:", bg='white')
         make_label.grid(row = 1, column = 1, padx= 60, pady = 10)

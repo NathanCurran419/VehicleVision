@@ -39,15 +39,15 @@ def create_main_window_frame(window, window_name):
         window.destroy()
         pi.pi_window()
         
-
     window_container = ttk.Frame(window,name = window_name)
     window_container.columnconfigure(1, weight = 1)
     window_container.columnconfigure(2, weight = 1)
     window_container.columnconfigure(3, weight = 1)
 
-    
     title_label = tk.Label(window_container, text = 'Car Comparison Results')
     title_label.grid(row=1,column = 1, columnspan=3)
+    
+
     if car1 != [] and car2 != []:
 
         car1_price_var = tk.StringVar()
@@ -111,8 +111,6 @@ def create_main_window_frame(window, window_name):
         car2_gear_var.set(f'Gear Type: {car2[5]}')
         car2_drive_var.set(f'Drive: {car2[6]}')
         car2_mpg_var.set(f'AVG MPG: {car2[7]}')
-
-        
         
         car2_price_label = tk.Label(window_container,textvariable = car2_price_var, font = 14, bg='white', justify = 'left')
         car2_price_label.grid(row = 4, column = 3, padx= 10, pady = 10)
