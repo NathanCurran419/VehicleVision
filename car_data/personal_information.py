@@ -9,7 +9,7 @@ def pi_window():
 
     # Loading state data
     state_data = {}
-    with open('car_data\Car Insurance.csv', newline='') as csvfile:
+    with open('car_data\Car Insurance.csv','r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             state_data[row['Abbreviation']] = float(row['Average'])
@@ -22,6 +22,29 @@ def pi_window():
         state_abbreviation = state_var.get()
         avg_insurance = state_data[state_abbreviation] if state_abbreviation in state_data else 0.0
         email = email_entry.get()
+        
+        data = [name,avg_miles_driven,local_cost_per_gallon,state_abbreviation,avg_insurance,email]
+        rows = []
+        user_file = r'car_data\user_info.csv'
+        with open(user_file, 'r', newline='') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                rows.append(row)
+                
+        row_index = len(rows)+1
+
+        # Update the specific row with new data
+        if row_index < len(rows):
+            rows[row_index] = data
+        else:
+            # If row_index is out of bounds, append the data as a new row
+            rows.append(data)
+
+        # Write the updated data back to the CSV file
+        with open(user_file, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(rows)
+
 
         # Report stored data for development purposes
         print("Name:", name)
@@ -30,6 +53,8 @@ def pi_window():
         print("State Abbreviation:", state_abbreviation)
         print("Average Insurance:", avg_insurance)
         print("Email:", email)
+        
+        window.destroy()
 
     window = tk.Tk()
     window.title("Personal Information")
