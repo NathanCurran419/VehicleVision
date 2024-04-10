@@ -11,6 +11,8 @@ from tkinter import ttk
 #==================
 # Global Variables
 #=================
+#UI related
+logo_image = None
 
 #personal info
 name_entry = None
@@ -141,6 +143,10 @@ def open_car_selection():
     year_select.bind('<<ComboboxSelected>>', on_year_select)
     year_select.pack()
 
+    #BACK BUTTON
+    back_button = tk.Button(root, text="Back to Main Menu", command=open_main_menu)
+    back_button.pack()
+
 
 
 #=============================================
@@ -215,39 +221,52 @@ def open_personal_info():
     submit_button = tk.Button(root, text="Submit", command=submit_form)
     submit_button.pack()
 
+    #BACK BUTTON
+    back_button = tk.Button(root, text="Back to Main Menu", command=open_main_menu)
+    back_button.pack()
+
 #=============================================
 # Main Program
 # Author: Nathan Curran
 #=============================================
+
+def open_main_menu():
+    global logo_image
+    
+    #Clear Screen
+    for widget in root.winfo_children():
+        widget.destroy()
+    
+    #Load logo
+    logo_image = PhotoImage(file="car_data\Logo.png")
+    #Resize the logo by half
+    logo_image = logo_image.subsample(2, 2)
+    logo_label = tk.Label(root, image=logo_image)
+    logo_label.pack()
+
+    # Display the welcome message
+    welcome_label = tk.Label(root, text="Welcome!", font=("Helvetica", 24))
+    welcome_label.pack()
+
+    #Navigational Buttons
+    vehicle_selection_button = tk.Button(root, text="Vehicle Selection", command=open_car_selection)
+    vehicle_selection_button.pack()
+
+    add_vehicle_button = tk.Button(root, text="Add new Vehicle", command=lambda: print("Navigate to Add new Vehicle"))
+    add_vehicle_button.pack()
+
+    cost_report_button = tk.Button(root, text="Cost report", command=lambda: print("Navigate to Cost Report"))
+    cost_report_button.pack()
+
+    personal_info_button = tk.Button(root, text="Personal Information", command=open_personal_info)
+    personal_info_button.pack()
 
 #Creating main window
 root = tk.Tk()
 root.title("Vehicle Vision")
 root.geometry("500x500")
 
-#Load logo
-logo_image = PhotoImage(file="car_data\Logo.png")
-#Resize the logo by half
-logo_image = logo_image.subsample(2, 2)
-logo_label = tk.Label(root, image=logo_image)
-logo_label.pack()
-
-# Display the welcome message
-welcome_label = tk.Label(root, text="Welcome!", font=("Helvetica", 24))
-welcome_label.pack()
-
-#Navigational Buttons
-vehicle_selection_button = tk.Button(root, text="Vehicle Selection", command=open_car_selection)
-vehicle_selection_button.pack()
-
-add_vehicle_button = tk.Button(root, text="Add new Vehicle", command=lambda: print("Navigate to Add new Vehicle"))
-add_vehicle_button.pack()
-
-cost_report_button = tk.Button(root, text="Cost report", command=lambda: print("Navigate to Cost Report"))
-cost_report_button.pack()
-
-personal_info_button = tk.Button(root, text="Personal Information", command=open_personal_info)
-personal_info_button.pack()
+open_main_menu()
 
 # Start the main loop
 root.mainloop()
