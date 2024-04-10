@@ -32,7 +32,7 @@ def pi_window():
         with open(user_file, 'r', newline='') as file:
             reader = csv.reader(file)
             for row in reader:
-                if email == row[5]:
+                if email == row[4]:
                     messagebox.showinfo("Error", "Email already exists. Please login instead.")
                     return
 
