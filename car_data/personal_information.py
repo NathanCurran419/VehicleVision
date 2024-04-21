@@ -1,6 +1,16 @@
 import tkinter as tk
 from tkinter import messagebox
 import csv
+#this section is used to address the program not finding other modules
+#depending on if they are run directly or from init.py
+import sys
+import os
+sys.path.append(os.path.split(sys.argv[0])[0])
+try:
+    from car_data import VehicleVisionMainApp as main_app
+except:
+    import VehicleVisionMainApp as main_app
+    
 
 
 def pi_window():
@@ -40,7 +50,6 @@ def pi_window():
         with open(user_file, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([name, avg_miles_driven, local_cost_per_gallon, state_abbreviation, email])
-            
 
         print("Name:", name)
         print("Avg Miles Driven Per Week:", avg_miles_driven)
@@ -50,6 +59,13 @@ def pi_window():
         print("Email:", email)
         
         window.destroy()
+        
+    def login():
+        pass
+    
+    def main_menu():
+        window.destroy()
+        main_app.open_main_menu()
 
     window = tk.Tk()
     window.title("Personal Information")
@@ -88,10 +104,18 @@ def pi_window():
     email_label.pack()
     email_entry = tk.Entry(window)
     email_entry.pack()
+    
+    login_button = tk.Button(window, text="Login Instead", command= login)
+    login_button.pack()
 
     submit_button = tk.Button(window, text="Submit", command=submit_form)
     submit_button.pack()
+    
+    #BACK BUTTON
+    back_button = tk.Button(window, text="Back to Main Menu", command= main_menu)
+    back_button.pack()
 
     return window.mainloop()
 
-pi_window()
+if __name__=="__main__":
+    pi_window()
