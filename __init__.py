@@ -3,8 +3,8 @@
 import sys
 import os
 sys.path.append(os.path.split(sys.argv[0])[0])
-from car_data import VehicleVisionMainApp as main_app
+from car_data import login
 
 if __name__ == '__main__':
-    main_app.open_main_menu()
+    login.create_login_page()
 
