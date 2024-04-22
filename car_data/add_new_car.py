@@ -58,7 +58,7 @@ def create_add_new_car_window():
             
         
         if price == "" or make =="" or model == "" or year == "" or cat =="" or mpg =="" or gear =="" or drive == "":
-            messagebox.showinfo("Error", "Please fill in all fields")
+            messagebox.showinfo("Error", "Please enter all fields")
             return
 
             
