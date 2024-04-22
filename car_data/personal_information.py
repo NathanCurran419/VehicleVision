@@ -50,13 +50,6 @@ def pi_window():
         with open(user_file, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([name, avg_miles_driven, local_cost_per_gallon, state_abbreviation, email])
-
-        print("Name:", name)
-        print("Avg Miles Driven Per Week:", avg_miles_driven)
-        print("Local Cost Per Gallon:", local_cost_per_gallon)
-        print("State Abbreviation:", state_abbreviation)
-        print("Average Insurance:", avg_insurance)
-        print("Email:", email)
         
         window.destroy()
         

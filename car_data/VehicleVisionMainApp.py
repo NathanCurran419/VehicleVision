@@ -51,6 +51,13 @@ def open_car_main(open_window):
     #before opening a new window or it won't load
     open_window.destroy()
     CARS.run_main()
+    
+def open_add_vehicle(open_window):
+    pass
+
+
+def open_cost_report(open_window):
+    pass
 
 #=============================================
 # FUNCTIONS/CODE FOR PERSONAL INFORMATION PAGE
@@ -93,10 +100,10 @@ def open_main_menu():
     vehicle_selection_button = tk.Button(main_root, text="Vehicle Selection", command =lambda: open_car_main(main_root))
     vehicle_selection_button.pack()
 
-    add_vehicle_button = tk.Button(main_root, text="Add new Vehicle", command=lambda: print("Navigate to Add new Vehicle"))
+    add_vehicle_button = tk.Button(main_root, text="Add new Vehicle", command=lambda: open_add_vehicle(main_root))
     add_vehicle_button.pack()
 
-    cost_report_button = tk.Button(main_root, text="Cost report", command=lambda: print("Navigate to Cost Report"))
+    cost_report_button = tk.Button(main_root, text="Cost report", command=lambda: open_cost_report())
     cost_report_button.pack()
 
     personal_info_button = tk.Button(main_root, text="Personal Information", command=lambda: open_pi_window(main_root))
