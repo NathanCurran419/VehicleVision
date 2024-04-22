@@ -170,5 +170,11 @@ car_data_path = os.path.join(current_dir, "CAR DATA COMBINED.csv")
 with open(car_data_path, 'r', encoding='utf-8') as file:
     reader = csv.DictReader(file)
     car_data = [row for row in reader]
+
+
+def main():
+    return create_add_new_car_window()
     
-create_add_new_car_window()
+if __name__ == '__main__':
+       main()
+

@@ -16,9 +16,11 @@ sys.path.append(os.path.split(sys.argv[0])[0])
 try:
     from car_data import  CARS
     from car_data import  personal_information as pi
+    from car_data import add_new_car as add_car
 except:
     import CARS
     import personal_information as pi
+    import add_new_car as add_car
 ##======================================================   
 
     
@@ -53,7 +55,8 @@ def open_car_main(open_window):
     CARS.run_main()
     
 def open_add_vehicle(open_window):
-    pass
+    open_window.destroy()
+    add_car.main()
 
 
 def open_cost_report(open_window):
