@@ -1,5 +1,6 @@
 #this section is used to address the program not finding other modules
 #depending on if they are run directly or from init.py
+from ast import mod
 import sys
 import os
 from turtle import width
@@ -64,7 +65,7 @@ def create_add_new_car_window():
             
         for row in car_data:
             if row['Model'].upper() == model and row['Make'].upper() == make and row['Prod. year'] == year:
-                messagebox.showinfo("Error", "Car already exist")
+                messagebox.showinfo("Error", f'Car {year} {make} {model} already exist')
                 return
         submit_car(price, make,model,year,cat,gear,drive,mpg)
 
