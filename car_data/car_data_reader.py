@@ -3,22 +3,23 @@ from tkinter import ttk
 import os
 import csv
 
+
+def load_car_data(filename):
+    # Load car data from a CSV file.
+    with open(filename, 'r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        data = [row for row in reader]
+    return data
+
+def get_unique_makes(data):
+    # Get unique car makes from the data.
+    return sorted(set(row['Make'] for row in data))
+
+
 class window():
     car = []
     car2 = []    
-
-    def load_car_data(filename):
-        # Load car data from a CSV file.
-        with open(filename, 'r', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
-            data = [row for row in reader]
-        return data
-
     
-    def get_unique_makes(data):
-        # Get unique car makes from the data.
-        return sorted(set(row['Make'] for row in data))
-
     # Get the current directory due to issues loading from different folder
     current_dir = os.path.dirname(__file__)
     # Path to the CSV file
@@ -33,7 +34,7 @@ class window():
         root = tk.Tk()
         root.title("Car Comparison Tool")
         root.geometry("650x500")
-        root.resizable(0,0) # Prevents resizing to help with background image layout
+        root.resizable(False,False) # Prevents resizing to help with background image layout
         
         # Function to create the UI for the car comparison tool.
         # Load the background image
@@ -41,7 +42,7 @@ class window():
         background_image = tk.PhotoImage(file=bg_image_path)
         background_image_label = tk.Label(root, image=background_image)
         background_image_label.place(x=0, y=0)
-        background_image_label.image_ref = background_image
+
 
         # Create window frames
         main_window_frame = window.create_frame(root, name='car_1', bg= background_image)
@@ -76,7 +77,7 @@ class window():
         def update_models():
             # Update the models.
             okay_button = tk.Button(container.winfo_toplevel(), text="Select", bg='grey', height=3, width=10,
-                                    font=14, state='disable')
+                                    font='14', state='disabled')
             okay_button.grid(row=7, column=1, padx=10, pady=10)
             selected_make = make_select.get()
             unique_models = filter_models_by_make(selected_make)
@@ -134,8 +135,8 @@ class window():
             exit_prompt.title("Are you sure?")
             exit_prompt.geometry("250x150")
             container.winfo_toplevel().withdraw()
-            yes_button = tk.Button(exit_prompt, text="Yes Exit", command=close_windows, font=40, justify='center')
-            no_button = tk.Button(exit_prompt, text="No go back...", command=go_back, font=40, justify='center')
+            yes_button = tk.Button(exit_prompt, text="Yes Exit", command=close_windows, font='40', justify='center')
+            no_button = tk.Button(exit_prompt, text="No go back...", command=go_back, font='40', justify='center')
             yes_button.grid(row=1, column=1, padx=10, pady=30)
             no_button.grid(row=2, column=1, padx=60, pady=0)
 
@@ -147,7 +148,7 @@ class window():
             # Enables Select Button
             if container.winfo_name() == 'car_2':
                 okay_button = tk.Button(container.winfo_toplevel(), text="Select", bg='green', height=3, width=10,
-                                        font=14, command=display_car_comparison, state='active')
+                                        font='14', command=display_car_comparison, state='active')
                 okay_button.grid(row=7, column=1, padx=10, pady=10)
                 set_car()
             if container.winfo_name() == 'car_1':
@@ -173,14 +174,14 @@ class window():
         def create_button(container):
             # Create buttons.
             select_button = tk.Button(container.winfo_toplevel(), text="Select", bg='grey', height=3, width=10,
-                                      font=14, command=display_car_comparison, state='disabled')
+                                      font='14', command=display_car_comparison, state='disabled')
             select_button.grid(row=7, column=1, padx=10, pady=10)
 
-            reset_button = tk.Button(container, text="Reset", bg='yellow', height=1, width=5, font=14,
+            reset_button = tk.Button(container, text="Reset", bg='yellow', height=1, width=5, font='14',
                                      command=lambda: window.on_reset_click(container, container.winfo_name(), bg))
             reset_button.grid(row=2, column=4, padx=10, pady=10)
 
-            close_button = tk.Button(container.winfo_toplevel(), text="Exit", bg="red", height=3, width=10, font=14,
+            close_button = tk.Button(container.winfo_toplevel(), text="Exit", bg="red", height=3, width=10, font='14',
                                      command=on_close_click)
             close_button.grid(row=8, column=1, padx=10, pady=10)
 

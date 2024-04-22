@@ -14,11 +14,11 @@ import sys
 import os
 sys.path.append(os.path.split(sys.argv[0])[0])
 try:
-    from car_data import  CARS
-    from car_data import  personal_information as pi
+    from car_data import car_comp
+    from car_data import personal_information as pi
     from car_data import add_new_car as add_car
 except:
-    import CARS
+    import car_comp
     import personal_information as pi
     import add_new_car as add_car
 ##======================================================   
@@ -52,7 +52,7 @@ def open_car_main(open_window):
     #the current open window must be destroyed
     #before opening a new window or it won't load
     open_window.destroy()
-    CARS.run_main()
+    car_comp.run_main()
     
 def open_add_vehicle(open_window):
     open_window.destroy()
@@ -83,33 +83,33 @@ def open_main_menu():
     main_root = tk.Tk("Main App","Main App","Main App")
     main_root.title("Vehicle Vision")
     main_root.geometry("500x500")
-    
+    main_root.configure(bg='white')
     #Clear Screen
     for widget in main_root.winfo_children():
          widget.destroy()
     
     #Load logo
-    logo_image = PhotoImage(file="car_data\Logo.png")
+    logo_image = PhotoImage(file="car_data/Logo.png")
     #Resize the logo by half
     logo_image = logo_image.subsample(2, 2)
-    logo_label = tk.Label(main_root, image=logo_image)
+    logo_label = tk.Label(main_root, image=logo_image,bg='white')
     logo_label.pack()
 
     # Display the welcome message
-    welcome_label = tk.Label(main_root, text="Welcome!", font=("Helvetica", 24))
+    welcome_label = tk.Label(main_root, text="Welcome!", font=("Helvetica", 24), bg='white')
     welcome_label.pack()
 
     #Navigational Buttons
-    vehicle_selection_button = tk.Button(main_root, text="Vehicle Selection", command =lambda: open_car_main(main_root))
+    vehicle_selection_button = tk.Button(main_root, text="Vehicle Selection", command =lambda: open_car_main(main_root),bg='white')
     vehicle_selection_button.pack()
 
-    add_vehicle_button = tk.Button(main_root, text="Add new Vehicle", command=lambda: open_add_vehicle(main_root))
+    add_vehicle_button = tk.Button(main_root, text="Add new Vehicle", command=lambda: open_add_vehicle(main_root),bg='white')
     add_vehicle_button.pack()
 
-    cost_report_button = tk.Button(main_root, text="Cost report", command=lambda: open_cost_report())
+    cost_report_button = tk.Button(main_root, text="Cost report", command=lambda: open_cost_report(main_root),bg='white')
     cost_report_button.pack()
 
-    personal_info_button = tk.Button(main_root, text="Personal Information", command=lambda: open_pi_window(main_root))
+    personal_info_button = tk.Button(main_root, text="Personal Information", command=lambda: open_pi_window(main_root),bg='white')
     personal_info_button.pack()
     
     return main_root.mainloop()

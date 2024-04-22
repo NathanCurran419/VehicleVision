@@ -24,21 +24,20 @@ def create_main_window_frame(window, window_name):
         window.destroy()
         main_app.open_main_menu()
         
-    window_container = ttk.Frame(window,name = window_name,border=0)
+    window_container = tk.Frame(window,name = window_name,border=0)
     window_container.columnconfigure(1, weight = 1)
     window_container.columnconfigure(2, weight = 1)
     window_container.columnconfigure(3, weight = 1)
     title_label = tk.Label(window_container, text = 'Car Comparison Results', background='white')
-    background_image = tk.PhotoImage(file= "car_data\VehicleVisionTempImage.png")
-    background_image_label = tk.Label(window_container, image= background_image)
-    background_image_label.place(x=0, y = 0)
-    background_image_label.image_ref = background_image
     title_label.grid(row=1,column = 1, columnspan=3)
+    window_container.configure(bg='white')
     
     car1 = list(cdr.window.car)
     car2 = list(cdr.window.car2)
 
-
+    mpg_comp_word = '' # using to dynamically change words for less than or greater than etc
+    cost_comp_word = ''
+    
     car_details_comparison = '' 
     if car1 != [] and car2 != []:
         if round(float(car1[7]),2)  <= round(float(car2[7]),2):
@@ -83,28 +82,28 @@ def create_main_window_frame(window, window_name):
         car1_drive_var.set(f'Drive: {car1[6]}')
         car1_mpg_var.set(f'AVG MPG: {car1[7]}')
         
-        car1_price_label = tk.Label(window_container,textvariable = car1_price_var, font = 14, bg='white', justify = 'left')
+        car1_price_label = tk.Label(window_container,textvariable = car1_price_var, font = '14', bg='white', justify = 'left')
         car1_price_label.grid(row = 4, column = 1, padx= 10, pady = 10,)
     
-        car1_make_label = tk.Label(window_container,textvariable = car1_make_var, font = 14, bg='white', justify = 'left')
+        car1_make_label = tk.Label(window_container,textvariable = car1_make_var, font = '14', bg='white', justify = 'left')
         car1_make_label.grid(row = 5, column = 1, padx= 10, pady = 10)
     
-        car1_model_label = tk.Label(window_container, textvariable = car1_model_var, font = 14, bg='white', justify = 'left')
+        car1_model_label = tk.Label(window_container, textvariable = car1_model_var, font = '14', bg='white', justify = 'left')
         car1_model_label.grid(row = 6, column = 1, padx= 10, pady = 10)
     
-        car1_year_label = tk.Label(window_container, textvariable = car1_year_var, font = 14, bg='white', justify = 'left')
+        car1_year_label = tk.Label(window_container, textvariable = car1_year_var, font = '14', bg='white', justify = 'left')
         car1_year_label.grid(row =7 , column = 1, padx= 10, pady = 10)
             
-        car1_category_label = tk.Label(window_container, textvariable = car1_cat_var, font = 14, bg='white', justify = 'left')
+        car1_category_label = tk.Label(window_container, textvariable = car1_cat_var, font = '14', bg='white', justify = 'left')
         car1_category_label.grid(row = 8, column = 1, padx= 10, pady = 10)
     
-        car1_gear_label = tk.Label(window_container, textvariable = car1_gear_var, font = 14, bg='white', justify = 'left')
+        car1_gear_label = tk.Label(window_container, textvariable = car1_gear_var, font = '14', bg='white', justify = 'left')
         car1_gear_label.grid(row = 9, column = 1, padx= 10, pady = 10)
     
-        car1_drive_label = tk.Label(window_container, textvariable = car1_drive_var, font = 14, bg='white', justify = 'left')
+        car1_drive_label = tk.Label(window_container, textvariable = car1_drive_var, font = '14', bg='white', justify = 'left')
         car1_drive_label.grid(row = 10, column = 1, padx= 10, pady = 10)
     
-        car1_mpg_label = tk.Label(window_container, textvariable = car1_mpg_var, font = 14, bg='white', justify = 'left')
+        car1_mpg_label = tk.Label(window_container, textvariable = car1_mpg_var, font = '14', bg='white', justify = 'left')
         car1_mpg_label.grid(row = 11, column = 1, padx= 10, pady = 10)
 
         # Car 2 label details
@@ -117,28 +116,28 @@ def create_main_window_frame(window, window_name):
         car2_drive_var.set(f'Drive: {car2[6]}')
         car2_mpg_var.set(f'AVG MPG: {car2[7]}')
         
-        car2_price_label = tk.Label(window_container,textvariable = car2_price_var, font = 14, bg='white', justify = 'left')
+        car2_price_label = tk.Label(window_container,textvariable = car2_price_var, font = '14', bg='white', justify = 'left')
         car2_price_label.grid(row = 4, column = 3, padx= 10, pady = 10)
     
-        car2_make_label = tk.Label(window_container,textvariable = car2_make_var, font = 14, bg='white', justify = 'left')
+        car2_make_label = tk.Label(window_container,textvariable = car2_make_var, font = '14', bg='white', justify = 'left')
         car2_make_label.grid(row = 5, column = 3, padx= 10, pady = 10)
     
-        car2_model_label = tk.Label(window_container, textvariable = car2_model_var, font = 14, bg='white', justify = 'left')
+        car2_model_label = tk.Label(window_container, textvariable = car2_model_var, font = '14', bg='white', justify = 'left')
         car2_model_label.grid(row = 6, column = 3, padx= 10, pady = 10)
     
-        car2_year_label = tk.Label(window_container, textvariable = car2_year_var, font = 14, bg='white', justify = 'left')
+        car2_year_label = tk.Label(window_container, textvariable = car2_year_var, font = '14', bg='white', justify = 'left')
         car2_year_label.grid(row = 7, column = 3, padx= 10, pady = 10)
             
-        car2_category_label = tk.Label(window_container, textvariable=car2_cat_var, font = 14, bg='white', justify = 'left')
+        car2_category_label = tk.Label(window_container, textvariable=car2_cat_var, font = '14', bg='white', justify = 'left')
         car2_category_label.grid(row = 8, column = 3, padx= 10, pady = 10)
     
-        car2_gear_label = tk.Label(window_container, textvariable =car2_gear_var, font = 14, bg='white', justify = 'left')
+        car2_gear_label = tk.Label(window_container, textvariable =car2_gear_var, font = '14', bg='white', justify = 'left')
         car2_gear_label.grid(row = 9, column = 3, padx= 10, pady = 10)
     
-        car2_drive_label = tk.Label(window_container, textvariable =car2_drive_var, font = 14, bg='white', justify = 'left')
+        car2_drive_label = tk.Label(window_container, textvariable =car2_drive_var, font = '14', bg='white', justify = 'left')
         car2_drive_label.grid(row = 10, column = 3, padx= 10, pady = 10)
     
-        car2_mpg_label = tk.Label(window_container, textvariable=car2_mpg_var, font = 14, bg='white', justify = 'left')
+        car2_mpg_label = tk.Label(window_container, textvariable=car2_mpg_var, font = '14', bg='white', justify = 'left')
         car2_mpg_label.grid(row = 11, column = 3, padx= 10, pady = 10)
 
     car_details_comparison_label = tk.Label(window_container, text = car_details_comparison, font='Calibri 14 bold', bg='white')
@@ -156,10 +155,9 @@ def run_main():
     com_window.title('Car comparison')
     com_window.geometry('800x800')
     com_window.columnconfigure(1,weight = 1)
-    background_image = tk.PhotoImage(file= "car_data\VehicleVisionTempImageMedium.png")
+    background_image = tk.PhotoImage(file= "car_data/VehicleVisionTempImageMedium.png")
     background_image_label = tk.Label(com_window, image= background_image)
     background_image_label.place(x=0, y = 0)
-    background_image_label.image_ref = background_image
     
     main_window = create_main_window_frame(com_window,window_name = 'main comparison window')
     

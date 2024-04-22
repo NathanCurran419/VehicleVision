@@ -8,8 +8,10 @@ import os
 sys.path.append(os.path.split(sys.argv[0])[0])
 try:
     from car_data import VehicleVisionMainApp as main_app
+    from car_data import login as login_window
 except:
     import VehicleVisionMainApp as main_app
+    import login as login_window
     
 
 
@@ -17,7 +19,7 @@ def pi_window():
 
     # Loading state data
     state_data = {}
-    with open('car_data\Car Insurance.csv','r', newline='') as csvfile:
+    with open('car_data/Car Insurance.csv','r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             state_data[row['Abbreviation']] = float(row['Average'])
@@ -54,7 +56,8 @@ def pi_window():
         window.destroy()
         
     def login():
-        pass
+        window.destroy()
+        login_window.create_login_page()
     
     def main_menu():
         window.destroy()
