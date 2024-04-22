@@ -163,6 +163,8 @@ def run_main():
     
     main_window.grid(row = 1, column =1)
     return com_window.mainloop()
+
+
    
 if __name__ == '__main__':
     run_main()

@@ -12,6 +12,7 @@ from tkinter import ttk
 ##=======================================================
 import sys
 import os
+from tkinter import messagebox
 sys.path.append(os.path.split(sys.argv[0])[0])
 try:
     from car_data import car_comp
@@ -60,7 +61,8 @@ def open_add_vehicle(open_window):
 
 
 def open_cost_report(open_window):
-    pass
+    messagebox.showinfo(title = "Cost report", message="Sorry page not yet available")
+    
 
 #=============================================
 # FUNCTIONS/CODE FOR PERSONAL INFORMATION PAGE
