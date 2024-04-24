@@ -18,8 +18,7 @@ def create_add_new_car_window():
     
     #saves car if not already in system
     def submit_car(price: float, make: str,model: str,year: str,cat: str,gear: str,drive: str,mpg:float):
-                
-        
+
         data = [price, make,model,year,cat,gear,drive,mpg]
         
         # Get the current directory due to issues loading from different folder

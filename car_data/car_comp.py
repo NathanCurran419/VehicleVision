@@ -9,6 +9,8 @@ CreatedonMonApr122:08:542024
 import sys
 import os
 sys.path.append(os.path.split(sys.argv[0])[0])
+import csv
+from tkinter import messagebox as msgbox
 try:
     from car_data import car_data_reader as cdr
     from car_data import VehicleVisionMainApp as main_app
@@ -19,7 +21,9 @@ except:
 import tkinter as tk
 from tkinter import ttk
 
-def create_main_window_frame(window, window_name):
+def create_main_window_frame(window, window_name, email):
+    car1_data = []
+    car2_data = []
     def go_home():
         window.destroy()
         main_app.open_main_menu()
@@ -81,6 +85,8 @@ def create_main_window_frame(window, window_name):
         car1_gear_var.set(f'Gear Type: {car1[5]}')
         car1_drive_var.set(f'Drive: {car1[6]}')
         car1_mpg_var.set(f'AVG MPG: {car1[7]}')
+
+        car1_data = [car1[0], car1[1], car1[2], car1[3], car1[4], car1[5], car1[6], car1[7]]
         
         car1_price_label = tk.Label(window_container,textvariable = car1_price_var, font = '14', bg='white', justify = 'left')
         car1_price_label.grid(row = 4, column = 1, padx= 10, pady = 10,)
@@ -115,6 +121,9 @@ def create_main_window_frame(window, window_name):
         car2_gear_var.set(f'Gear Type: {car2[5]}')
         car2_drive_var.set(f'Drive: {car2[6]}')
         car2_mpg_var.set(f'AVG MPG: {car2[7]}')
+
+        car2_data = [car2[0], car2[1], car2[2], car2[3], car2[4], car2[5], car2[6], car2[7]]
+
         
         car2_price_label = tk.Label(window_container,textvariable = car2_price_var, font = '14', bg='white', justify = 'left')
         car2_price_label.grid(row = 4, column = 3, padx= 10, pady = 10)
@@ -146,10 +155,26 @@ def create_main_window_frame(window, window_name):
     done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home,width=10,height=3)
     done_button.grid(row=12,column = 2)
 
+    if car1 != [] and car2 != []:
+        data = [email]
+        for i in car1_data:
+            data.append(i)
+        for i in car2_data:
+            data.append(i)
+
+        # Get the current directory due to issues loading from different folder
+        current_dir = os.path.dirname(__file__)
+        # Path to the CSV file
+        car_data_path = os.path.join(current_dir, "user_logs.csv")
+        # Append the data as a new row
+        with open(car_data_path, 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(data)
+        msgbox.showinfo(title= "Saved", message="Your selections have been saved to your personal garage")
     
     return window_container
 
-def run_main():
+def run_main(email = "None"):
     cdr.open_car_data()
     com_window = tk.Tk()
     com_window.title('Car comparison')
@@ -159,10 +184,13 @@ def run_main():
     background_image_label = tk.Label(com_window, image= background_image)
     background_image_label.place(x=0, y = 0)
     
-    main_window = create_main_window_frame(com_window,window_name = 'main comparison window')
+    main_window = create_main_window_frame(com_window,window_name = 'main comparison window', email = email)
     
     main_window.grid(row = 1, column =1)
     return com_window.mainloop()
+
+def open_garage():
+    pass
 
 
    

@@ -49,39 +49,32 @@ year_select = None
 # Author: Michael Spears
 #========================================
 
-def open_car_main(open_window):
+def open_car_main(open_window, email):
     #the current open window must be destroyed
     #before opening a new window or it won't load
     open_window.destroy()
-    car_comp.run_main()
+    car_comp.run_main(email)
     
 def open_add_vehicle(open_window):
     open_window.destroy()
     add_car.main()
 
 
-def open_cost_report(open_window):
-    messagebox.showinfo(title = "Cost report", message="Sorry page not yet available")
-    
-
-#=============================================
-# FUNCTIONS/CODE FOR PERSONAL INFORMATION PAGE
-# Author: Nathan Curran
-#=============================================
-
-def open_pi_window(open_window):
-    open_window.destroy()
-    pi.pi_window()
+def open_cost_report(open_window, email = "None"):
+    if email == "None":
+        messagebox.showinfo(title = "Please login", message = "'Please login to see person cost report")
+        return
+    elif email != "None":
+        messagebox.showinfo(title = "Cost report", message="Sorry page not yet available")
+  
 
 #=============================================
 # Main Program
 # Author: Nathan Curran
 #=============================================
 
-def open_main_menu():
-    
+def open_main_menu(email = "None"):
     global logo_image
-    
     main_root = tk.Tk("Main App","Main App","Main App")
     main_root.title("Vehicle Vision")
     main_root.geometry("500x500")
@@ -98,21 +91,24 @@ def open_main_menu():
     logo_label.pack()
 
     # Display the welcome message
-    welcome_label = tk.Label(main_root, text="Welcome!", font=("Helvetica", 24), bg='white')
-    welcome_label.pack()
+    if email == "None":
+        welcome_label = tk.Label(main_root, text="Welcome!", font=("Helvetica", 24), bg='white')
+        welcome_label.pack()
+    elif email != 'None':
+        user_name = email[:email.index("@")]
+        welcome_message = (f'Welcome back {user_name}!')
+        welcome_label = tk.Label(main_root, text=welcome_message, font=("Helvetica", 24), bg='white')
+        welcome_label.pack()
 
     #Navigational Buttons
-    vehicle_selection_button = tk.Button(main_root, text="Vehicle Selection", command =lambda: open_car_main(main_root),bg='white')
+    vehicle_selection_button = tk.Button(main_root, text="Vehicle Selection", command =lambda: open_car_main(main_root,email),bg='white')
     vehicle_selection_button.pack()
 
     add_vehicle_button = tk.Button(main_root, text="Add new Vehicle", command=lambda: open_add_vehicle(main_root),bg='white')
     add_vehicle_button.pack()
 
-    cost_report_button = tk.Button(main_root, text="Cost report", command=lambda: open_cost_report(main_root),bg='white')
+    cost_report_button = tk.Button(main_root, text="Cost report", command=lambda: open_cost_report(main_root,email),bg='white')
     cost_report_button.pack()
-
-    personal_info_button = tk.Button(main_root, text="Personal Information", command=lambda: open_pi_window(main_root),bg='white')
-    personal_info_button.pack()
     
     return main_root.mainloop()
 

@@ -32,7 +32,6 @@ def create_login_page():
             msgbox.showerror(title = "Invalid email", message = "Please enter valid email address.")
             return
 
-
         #loading user info to check if email exist
         user_file = r'car_data\user_info.csv' 
         with open(user_file, 'r', encoding='utf-8') as file:
@@ -44,7 +43,7 @@ def create_login_page():
                     msgbox.showinfo(title = "Thanks", message ="Login Successful")
                     email_found = True
                     root.destroy()
-                    main_app.open_main_menu()
+                    main_app.open_main_menu(email)
                     return
             #if email is not found will prompt to take to personal info page to create account
             if  email_found == False:
