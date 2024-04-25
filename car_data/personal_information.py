@@ -51,7 +51,7 @@ def pi_window():
         # Append the data as a new row
         with open(user_file, 'a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([name, avg_miles_driven, local_cost_per_gallon, state_abbreviation, email])
+            writer.writerow([name, avg_miles_driven, local_cost_per_gallon,state_abbreviation,avg_insurance, email])
         window.destroy()
         main_app.open_main_menu(email)
 
