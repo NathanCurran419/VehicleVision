@@ -52,7 +52,8 @@ def create_main_window_frame(window, window_name, email):
             cost_comp_word = ' less than '
         elif round(float(car1[0]),2) >= round(float(car2[0]),2):
             cost_comp_word = ' more than '
-        car_details_comparison = (f'{car1[1]} gets {(car1[7]) - float(car2[7]):2} {mpg_comp_word} {car2[1]} and {car1[1]} cost ${round(float(car1[0]),2) - round(float(car2[0]),2)} {cost_comp_word} {car2[1]}\n')
+        print (car2[7])
+        car_details_comparison = (f'{car1[1]} gets {round(float(car1[7]) - float(car2[7]),2)} {mpg_comp_word} {car2[1]} and {car1[1]} cost ${round(float(car1[0]) - float(car2[0]),2)} {cost_comp_word} {car2[1]}\n')
     else:
         car_details_comparison = 'No car selected'
 

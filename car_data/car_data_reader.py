@@ -33,7 +33,7 @@ class window():
     def ui():
         root = tk.Tk()
         root.title("Car Comparison Tool")
-        root.geometry("700x500")
+        root.geometry("700x700")
         root.resizable(False,False) # Prevents resizing to help with background image layout
         
         # Function to create the UI for the car comparison tool.

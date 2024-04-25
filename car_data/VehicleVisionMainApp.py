@@ -44,11 +44,6 @@ model_select = None
 year_select = None
 
 
-#========================================
-# FUNCTIONS/CODE FOR CAR SELECTION PAGE
-# Author: Michael Spears
-#========================================
-
 def open_car_main(open_window, email):
     #the current open window must be destroyed
     #before opening a new window or it won't load
@@ -67,11 +62,6 @@ def open_cost_report(open_window, email = "None"):
     elif email != "None":
         messagebox.showinfo(title = "Cost report", message="Sorry page not yet available")
   
-
-#=============================================
-# Main Program
-# Author: Nathan Curran
-#=============================================
 
 def open_main_menu(email = "None"):
     global logo_image

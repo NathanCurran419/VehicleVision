@@ -2,3 +2,4 @@ name,avg_mile_driven,local_cost_per_gallon,state,state_insurance_avg,email
 Michael,80.0,3.5,MO,1710.0,mspears171997@gmail.com
 michael,10.0,10.0,MO,test2@test.com
 michael,10.5,10.5,MO,test3@test
+michael,5.5,5.5,MO,1710.0,test@test
