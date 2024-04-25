@@ -26,7 +26,7 @@ def create_main_window_frame(window, window_name, email):
     car2_data = []
     def go_home():
         window.destroy()
-        main_app.open_main_menu()
+        main_app.open_main_menu(email)
         
     window_container = tk.Frame(window,name = window_name,border=0)
     window_container.columnconfigure(1, weight = 1)
