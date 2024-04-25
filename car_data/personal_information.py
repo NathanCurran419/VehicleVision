@@ -52,8 +52,9 @@ def pi_window():
         with open(user_file, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([name, avg_miles_driven, local_cost_per_gallon, state_abbreviation, email])
-        
         window.destroy()
+        main_app.open_main_menu(email)
+
         
     def login():
         window.destroy()
