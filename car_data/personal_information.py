@@ -42,9 +42,9 @@ def pi_window():
                 
         # Check if email already exists in the CSV file
         with open(user_file, 'r', newline='') as file:
-            reader = csv.reader(file)
+            reader = csv.DictReader(file)
             for row in reader:
-                if email == row[4]:
+                if email == row['email']:
                     messagebox.showinfo("Error", "Email already exists. Please login instead.")
                     return
 
