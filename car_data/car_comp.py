@@ -24,7 +24,7 @@ from tkinter import ttk
 def create_main_window_frame(window, window_name, email):
     car1_data = []
     car2_data = []
-    def go_home():
+    def go_home(email):
         window.destroy()
         main_app.open_main_menu(email)
         
@@ -71,7 +71,6 @@ def create_main_window_frame(window, window_name, email):
             cost_comp_word = ' less than '
         elif round(float(car1[0]),2) >= round(float(car2[0]),2):
             cost_comp_word = ' more than '
-        print (car2[7])
         car_details_comparison = (f'{car1[1]} gets {round(float(car1[7]) - float(car2[7]),2)} {mpg_comp_word} {car2[1]} and {car1[1]} cost ${round(float(car1[0]) - float(car2[0]),2)} {cost_comp_word} {car2[1]}\n')
     else:
         car_details_comparison = 'No car selected'
@@ -124,9 +123,7 @@ def create_main_window_frame(window, window_name, email):
     
         car1_year_label = tk.Label(window_container, textvariable = car1_year_var, font = '14', bg='white', justify = 'left')
         car1_year_label.grid(row =7 , column = 1, padx= 10, pady = 10)
-
-
-            
+    
         car1_category_label = tk.Label(window_container, textvariable = car1_cat_var, font = '14', bg='white', justify = 'left')
         car1_category_label.grid(row = 8, column = 1, padx= 10, pady = 10)
     
@@ -189,7 +186,7 @@ def create_main_window_frame(window, window_name, email):
         user_insur_label.grid(row= 12, column = 2, padx=10, pady=10)
 
 
-    done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home,width=10,height=3)
+    done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = lambda: go_home(email),width=10,height=3)
     done_button.grid(row=13,column = 2)
 
     if car1 != [] and car2 != []:
@@ -198,16 +195,22 @@ def create_main_window_frame(window, window_name, email):
             data.append(i)
         for i in car2_data:
             data.append(i)
-
+            
+        already_logged=False # used to prevent duplicate entries
         # Get the current directory due to issues loading from different folder
         current_dir = os.path.dirname(__file__)
         # Path to the CSV file
         car_data_path = os.path.join(current_dir, "user_logs.csv")
         # Append the data as a new row
-        with open(car_data_path, 'a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(data)
-        msgbox.showinfo(title= "Saved", message="Your selections have been saved to your personal garage")
+        with open(car_data_path, 'r', encoding='utf-8') as file:
+            for row in file: #Check for duplicate entries
+                if row == data:
+                    already_logged = True
+            if already_logged == False:
+                with open(car_data_path, 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(data)
+                msgbox.showinfo(title= "Saved", message="Your selections have been saved to your personal garage")
     
     return window_container
 
@@ -226,8 +229,6 @@ def run_main(email = "None"):
     main_window.grid(row = 1, column =1)
     return com_window.mainloop()
 
-def open_garage():
-    pass
 
 
    

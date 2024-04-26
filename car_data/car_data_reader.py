@@ -1,7 +1,12 @@
 import tkinter as tk
-from tkinter import ANCHOR, ttk
+from tkinter import ttk
 import os
+import sys
 import csv
+try:
+    from car_data import VehicleVisionMainApp as main_app
+except:
+    import VehicleVisionMainApp as main_app
 
 
 def load_car_data(filename):
@@ -126,6 +131,8 @@ class window():
             # for close button.
             def close_windows():
                 container.winfo_toplevel().destroy()
+                main_app.open_main_menu()
+                
 
             def go_back():
                 container.winfo_toplevel().deiconify()

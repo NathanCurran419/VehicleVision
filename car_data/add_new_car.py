@@ -13,7 +13,7 @@ from tkinter import ttk
 from tkinter import messagebox as msgbox
 import csv
 
-def create_add_new_car_window():
+def create_add_new_car_window(email):
     
     
     #saves car if not already in system
@@ -71,7 +71,7 @@ def create_add_new_car_window():
 
     def open_main_menu():
         root.destroy()
-        main_app.open_main_menu()
+        main_app.open_main_menu(email)
         
     #page settings
     root = tk.Tk()
@@ -175,9 +175,9 @@ with open(car_data_path, 'r', encoding='utf-8') as file:
     car_data = [row for row in reader]
 
 
-def main():
-    return create_add_new_car_window()
+def main(email = 'None'):
+    return create_add_new_car_window(email)
     
 if __name__ == '__main__':
-       main()
+       main('None')
 

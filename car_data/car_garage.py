@@ -1,6 +1,6 @@
 import csv
 import tkinter as tk
-from tkinter import PhotoImage
+from tkinter import SEL, PhotoImage
 from tkinter import ttk
 
 #this section is used to address the program not finding other modules
@@ -22,18 +22,25 @@ except:
 def open_garage(email = "None"):
         garage_page = tk.Tk()
         garage_page.geometry("500x500")
-        previous_cars = []
-        all_car_info = []
-
-        def load_car_comp():
-            selected_comp = car_selection.get()
-            print(selected_comp)
-            exit 
-            def go_home():
-                garage_page.destroy()
-                main_app.open_main_menu()
         
-            window_container = tk.Frame(garage_page,border=0)
+        previous_cars = []
+        all_car_info = {'Key':[]}
+        selected_comp = ''
+        
+
+        def load_car_comp(page):
+            selected_comp = car_selection.get()
+            page.destroy()
+            window_container = tk.Tk()
+            window_container.geometry("800x800")
+            window_container.title("Garage")
+            window_container.configure(bg='white')
+            
+
+            def go_home():
+                window_container.destroy()
+                main_app.open_main_menu(email)
+       
             window_container.columnconfigure(1, weight = 1)
             window_container.columnconfigure(2, weight = 1)
             window_container.columnconfigure(3, weight = 1)
@@ -41,8 +48,8 @@ def open_garage(email = "None"):
             title_label.grid(row=1,column = 1, columnspan=3)
             window_container.configure(bg='white')
     
-            car1 = list(previous_cars[1])
-            car2 = list(previous_cars[1])
+            car1 = list(all_car_info[selected_comp][1:9])# first portion of list since list containts info for both cars and email
+            car2 = list(all_car_info[selected_comp][9:18])
 
             mpg_comp_word = '' # using to dynamically change words for less than or greater than etc
             cost_comp_word = ''
@@ -156,6 +163,8 @@ def open_garage(email = "None"):
                 done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home,width=10,height=3)
                 done_button.grid(row=12,column = 2)
             
+                for child in window_container.winfo_children():
+                    print(child)
                 garage_page.mainloop()
 
         # Display the welcome message
@@ -177,16 +186,16 @@ def open_garage(email = "None"):
             #when email is found load into list of previous selections
             for row in data:
                 if email == row['Email']:
-                    previous_cars.append([row['Model1'],row['Make1'],row['Prod. year1'],'VS.',row['Model2'],row['Make2'],row['Prod. year2']])
-                    for k in row:
-                        if k != 'email':
-                            all_car_info.append(row[k])
+                    previous_cars.append((f"{row['Model1']}, {row['Make1']}, {row['Prod. year1']}, VS., {row['Model2']}, {row['Make2']}, {row['Prod. year2']}"))
+                    all_cars_key = (f"{row['Model1']}, {row['Make1']}, {row['Prod. year1']}, VS., {row['Model2']}, {row['Make2']}, {row['Prod. year2']}")
+                    all_car_info[all_cars_key] = [k for k in row.values()]
                     
         car_selection = ttk.Combobox(garage_page, values = previous_cars)
-        car_selection.bind('<<ComboboxSelected>>', lambda event: load_car_comp())
+        car_selection.bind('<<ComboboxSelected>>', lambda event: load_car_comp(garage_page))
         car_selection.grid(row=2, column=1,padx=(10), ipadx = (150))
 
         garage_page.mainloop()
 
-open_garage()
+if __name__ =='__main__':
+    open_garage()
 
