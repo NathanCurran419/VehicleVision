@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ANCHOR, ttk
 import os
 import csv
 
@@ -33,7 +33,7 @@ class window():
     def ui():
         root = tk.Tk()
         root.title("Car Comparison Tool")
-        root.geometry("700x700")
+        root.geometry("600x700")
         root.resizable(False,False) # Prevents resizing to help with background image layout
         
         # Function to create the UI for the car comparison tool.
@@ -72,7 +72,7 @@ class window():
         if name == 'car_1':
             background_image_label.place(x=-20, y=-20)
         else:
-            background_image_label.place(x=-20, y=-160)
+            background_image_label.place(x=-20, y=-153)
 
         def update_models():
             # Update the models.

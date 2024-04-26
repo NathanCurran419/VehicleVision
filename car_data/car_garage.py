@@ -23,12 +23,12 @@ def open_garage(email = "None"):
         garage_page = tk.Tk()
         garage_page.geometry("500x500")
         previous_cars = []
+        all_car_info = []
 
-        def load_car_comp(page):
-            page.destroy()
-            garage_page = tk.Tk()
-            
-                
+        def load_car_comp():
+            selected_comp = car_selection.get()
+            print(selected_comp)
+            exit 
             def go_home():
                 garage_page.destroy()
                 main_app.open_main_menu()
@@ -41,8 +41,8 @@ def open_garage(email = "None"):
             title_label.grid(row=1,column = 1, columnspan=3)
             window_container.configure(bg='white')
     
-            car1 = list(previous_cars[1:7])
-            car2 = list(previous_cars[7:15])
+            car1 = list(previous_cars[1])
+            car2 = list(previous_cars[1])
 
             mpg_comp_word = '' # using to dynamically change words for less than or greater than etc
             cost_comp_word = ''
@@ -150,13 +150,13 @@ def open_garage(email = "None"):
                 car2_mpg_label = tk.Label(window_container, textvariable=car2_mpg_var, font = '14', bg='white', justify = 'left')
                 car2_mpg_label.grid(row = 11, column = 3, padx= 10, pady = 10)
 
-            car_details_comparison_label = tk.Label(window_container, text = car_details_comparison, font='Calibri 14 bold', bg='white')
-            car_details_comparison_label.grid(row = 3, column = 1, columnspan = 3)
+                car_details_comparison_label = tk.Label(window_container, text = car_details_comparison, font='Calibri 14 bold', bg='white')
+                car_details_comparison_label.grid(row = 3, column = 1, columnspan = 3)
 
-            done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home,width=10,height=3)
-            done_button.grid(row=12,column = 2)
+                done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home,width=10,height=3)
+                done_button.grid(row=12,column = 2)
             
-            garage_page.mainloop()
+                garage_page.mainloop()
 
         # Display the welcome message
         if email == "None":
@@ -177,15 +177,13 @@ def open_garage(email = "None"):
             #when email is found load into list of previous selections
             for row in data:
                 if email == row['Email']:
-                    found_cars = []
-                    for  k in row:
-                       if k != 'Email':
-                        found_cars.append(row[k]) 
-                    previous_cars.append(found_cars)
-                    print(found_cars)
+                    previous_cars.append([row['Model1'],row['Make1'],row['Prod. year1'],'VS.',row['Model2'],row['Make2'],row['Prod. year2']])
+                    for k in row:
+                        if k != 'email':
+                            all_car_info.append(row[k])
                     
         car_selection = ttk.Combobox(garage_page, values = previous_cars)
-        car_selection.bind('<<ComboboxSelected>>', lambda event: load_car_comp(garage_page))
+        car_selection.bind('<<ComboboxSelected>>', lambda event: load_car_comp())
         car_selection.grid(row=2, column=1,padx=(10), ipadx = (150))
 
         garage_page.mainloop()
