@@ -63,7 +63,7 @@ def open_cost_report(open_window, email = "None"):
         return
     elif email != "None":
         open_window.destroy()
-        car_garage.open_garage()
+        car_garage.open_garage(email)
   
 
 def open_main_menu(email = "None"):
