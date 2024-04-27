@@ -25,8 +25,6 @@ def open_garage(email = "None"):
         
         previous_cars = []
         all_car_info = {'Key':[]}
-        selected_comp = ''
-        
 
         def load_car_comp(page):
             selected_comp = car_selection.get()
@@ -48,12 +46,35 @@ def open_garage(email = "None"):
             title_label.grid(row=1,column = 1, columnspan=3)
             window_container.configure(bg='white')
     
+
+            car1 = []
+            car2 = []
+            
             car1 = list(all_car_info[selected_comp][1:9])# first portion of list since list containts info for both cars and email
             car2 = list(all_car_info[selected_comp][9:18])
-
+            selected_comp = ''
             mpg_comp_word = '' # using to dynamically change words for less than or greater than etc
             cost_comp_word = ''
-    
+            user_insur = 0
+            user_gas_cost = 0
+            user_miles_driven = 0
+            car_details_comparison = ''
+            user_state=''
+            # Get the current directory due to issues loading from different folder
+            current_dir = os.path.dirname(__file__)
+            # Path to the CSV file
+            user_data_path = os.path.join(current_dir, "user_info.csv")
+            # Load user data from a CSV file.
+            with open(user_data_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                user_data = [row for row in reader]
+                for user in user_data:
+                    if user['email'] == email:
+                        user_insur = user['state_insurance_avg']
+                        user_gas_cost = user['local_cost_per_gallon']
+                        user_miles_driven = user['avg_mile_driven']
+                        user_state = user['state']
+                        
             car_details_comparison = '' 
             if car1 != [] and car2 != []:
                 if round(float(car1[7]),2)  <= round(float(car2[7]),2):
@@ -98,6 +119,10 @@ def open_garage(email = "None"):
                 car1_drive_var.set(f'Drive: {car1[6]}')
                 car1_mpg_var.set(f'AVG MPG: {car1[7]}')
         
+                car1_calculated_gas_cost =(f'Gas cost per year: {round((float(user_gas_cost) / float(car1[7])) * (float(user_miles_driven) * 365),2)}')
+                car2_calculated_gas_cost =(f'Gas cost per year: {round((float(user_gas_cost) / float(car2[7])) * (float(user_miles_driven) * 365),2)}')
+
+
                 car1_price_label = tk.Label(window_container,textvariable = car1_price_var, font = '14', bg='white', justify = 'left')
                 car1_price_label.grid(row = 4, column = 1, padx= 10, pady = 10,)
     
@@ -121,6 +146,9 @@ def open_garage(email = "None"):
     
                 car1_mpg_label = tk.Label(window_container, textvariable = car1_mpg_var, font = '14', bg='white', justify = 'left')
                 car1_mpg_label.grid(row = 11, column = 1, padx= 10, pady = 10)
+                
+                car1_yearly_gas_cost_label = tk.Label(window_container, text = car1_calculated_gas_cost, font = '14', bg='white', justify = 'left')
+                car1_yearly_gas_cost_label.grid(row = 12, column = 1, padx= 10, pady = 10)
 
                 # Car 2 label details
                 car2_price_var.set(f'Price: ${car2[0]}')
@@ -160,11 +188,15 @@ def open_garage(email = "None"):
                 car_details_comparison_label = tk.Label(window_container, text = car_details_comparison, font='Calibri 14 bold', bg='white')
                 car_details_comparison_label.grid(row = 3, column = 1, columnspan = 3)
 
+                car2_yearly_gas_cost_label = tk.Label(window_container, text = car2_calculated_gas_cost , font = '14', bg='white', justify = 'left')
+                car2_yearly_gas_cost_label.grid(row = 12, column = 3, padx= 10, pady = 10)
+
+                user_insur_label = tk.Label(window_container, text= (f'EST. Yearly insurance cost for {user_state}: {user_insur}'), font = '14', bg ='white', justify='center')
+                user_insur_label.grid(row= 12, column = 2, padx=10, pady=10)
+
                 done_button = tk.Button(window_container, text = 'Done', bg = 'green', command = go_home,width=10,height=3)
-                done_button.grid(row=12,column = 2)
+                done_button.grid(row=13,column = 2)
             
-                for child in window_container.winfo_children():
-                    print(child)
                 garage_page.mainloop()
 
         # Display the welcome message

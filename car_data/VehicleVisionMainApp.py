@@ -62,6 +62,7 @@ def open_cost_report(open_window, email = "None"):
         messagebox.showinfo(title = "Please login", message = "'Please login to see personal cost report")
         return
     elif email != "None":
+        open_window.destroy()
         car_garage.open_garage()
   
 

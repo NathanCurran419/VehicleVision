@@ -210,7 +210,7 @@ def create_main_window_frame(window, window_name, email):
                 with open(car_data_path, 'a', newline='') as file:
                     writer = csv.writer(file)
                     writer.writerow(data)
-                msgbox.showinfo(title= "Saved", message="Your selections have been saved to your personal garage")
+                    msgbox.showinfo(title= "Saved", message="Your selections have been saved to your personal garage")
     
     return window_container
 
